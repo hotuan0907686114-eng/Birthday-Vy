@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <title>snvv</title>
+  <style>
+    :root{
+      --bg:#050406;
+      --glow:#ff4db8;
+      --text-color:#ff8ad3;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);font-family:Inter, system-ui, Arial}
+    .stage{position:relative;overflow:hidden;height:100vh;width:100vw}
+
+    .falling{
+      position:absolute;left:0;top:-10vh;will-change:transform,opacity,filter;
+      pointer-events:none;white-space:nowrap;
+      text-shadow: 0 0 8px rgba(255,77,184,0.85), 0 0 16px rgba(255,77,184,0.35);
+      color:var(--text-color);font-weight:600;font-size:20px;
+      transform: translateY(-10vh);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6));
+      transition: opacity 160ms linear, filter 160ms linear, transform 120ms linear;
+      mix-blend-mode: normal;
+    }
+    .falling{
+  position:absolute;
+  left:0;top:-10vh;
+  font-family: 'Pacifico', cursive;
+  pointer-events:none;
+  white-space:nowrap;
+  text-shadow: 0 0 8px rgba(255,77,184,0.85), 0 0 16px rgba(255,77,184,0.35);
+  color:var(--text-color);
+  font-weight:600;
+  font-size:20px;
+  transform: translateY(-10vh);
+}
+
+
+    .glow{
+      text-shadow: 0 0 10px rgba(255,77,184,0.9), 0 0 22px rgba(255,77,184,0.5), 0 0 40px rgba(255,77,184,0.2);
+    }
+
+    .avatar-img{width:200px;height:200px;border-radius:20%;object-fit:cover;box-shadow:0 6px 18px rgba(0,0,0,0.65)}
+
+    @keyframes fall { to{ transform: translateY(120vh);} }
+
+    .ui{position:fixed;left:12px;top:12px;color:#fff;z-index:9999;font-size:13px;backdrop-filter: blur(6px);padding:8px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));}
+    .ui input{width:60px}
+
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage"></div>
+ 
+  </div>
+
+<script>
+  const texts = [
+    "Happy Birthday 🎉", "I <3 u", "Học giỏi hơn", "Sinh Nhật Vui Vẻ🎉", "Ngô Thúy Vy", "Bắp", 'Anh Tuấn and Khoa Văn chúc mừng sinh nhật bé', "11/12/2008", 'Mau ăn chóng lớn',
+  ];
+
+  const stage = document.getElementById('stage');
+  let spawnInterval = 150;
+  let baseSpeed = 10;
+  let baseSize = 20;
+
+  
+
+  
+  
+  
+  
+
+  const imageSources = [
+  'vy1.jpg',
+  'vy2.jpg',
+  'vy3.jpg',
+  'vy4.jpg',
+  'vy5.jpg',
+  'vy6.jpg',
+  'vy7.jpg',
+ 
+  ];
+
+  function spawnText(){
+    const el = document.createElement('div');
+    el.className = 'falling glow';
+    el.textContent = texts[Math.floor(Math.random()*texts.length)];
+    const size = Math.round((Math.random()*18) + (baseSize-6));
+    el.style.fontSize = size + 'px';
+    el.style.left = (Math.random()*92)+'vw';
+    const duration = (Math.random()*baseSpeed*0.8 + baseSpeed*0.6).toFixed(2);
+    el.style.animation = `fall ${duration}s linear forwards`;
+    stage.appendChild(el);
+    setTimeout(()=> el.remove(), duration*1000+2000);
+  }
+
+  function spawnImage(){
+    const el = document.createElement('img');
+    el.className = 'falling avatar-img';
+    el.src = imageSources[Math.floor(Math.random()*imageSources.length)];
+    el.style.left = (Math.random()*92)+'vw';
+    const duration = (Math.random()*5+3).toFixed(2);
+    el.style.animation = `fall ${duration}s linear forwards`;
+    stage.appendChild(el);
+    setTimeout(()=> el.remove(), duration*1000+1500);
+  }
+
+  setInterval(()=> spawnText(), spawnInterval);
+  setInterval(()=>{ if(Math.random()<0.35) spawnImage(); }, 1500);
+
+</script>
+</body>
+</html>
